@@ -1,0 +1,13 @@
+div, p, td { font-family:Arial,Helvetica,sans-serif; }
+html, body { height: 100%; width: 100%; margin: 0; }
+
+div#ultra { z-index:0; width:100%; height:100%; }
+div#main { z-index:0; position:relative; width:99%; display:inline-block; top:120px; }
+table#myTable { width:100%; }
+td#t1 { width:6%; }
+td#t2 { width:0.1%; }
+td#t3 { width:94%; }
+div#aba { z-index:0; position:relative; width:0%; height:100%; display:none; border:1px solid black; top:120px;}
+div#upper { z-index:99; position:fixed; height:120px; border:1px solid black; width:100%; background-color:white;}
+div#header_left { display:inline-block; }
+div#header_right { display:inline-block; }

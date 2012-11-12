@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+<script src="jquery-ui-1.9.0.custom/js/jquery-ui-1.9.0.custom.js"></script>
+<link href="jquery-ui-1.9.0.custom/css/ui-lightness/jquery-ui-1.9.0.custom.css" rel="stylesheet">
+<link href="css/HistVis.css" rel="stylesheet">
+<script type="text/javascript" src="js/HistVis.js"></script>
+<script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
+
+<title>HistVis</title>
+<META name="Author" lang="pt-pt" content="Paulo Ferreira">
+
+</head>
+
+<body>
+<div id="ultra">
+	<div id="upper">
+		
+		<form name="form1" method="post" action="">
+			<div id="header_left">
+				<img src="logo.png" alt="HistVis" width="200" height="40">
+			</div>
+			<div id="header_right">
+				<label for="13">Search:</label>
+				<input type="text" name="search_text" id="search_text" value="Please enter a word">
+				<button type="button" id="search_button">Search</button>
+				<button type="button" id="remove_button">Remove</button>
+			</div><p></p>
+			<div id="header_low">
+				<button type="button" id="close">Abrir/Fechar</button>
+				<button type="button" id="type_linear">Mudar tipo de vista (linear)</button>
+				<button type="button" id="type_log">Mudar tipo de vista (Log)</button>
+				<button type="button" id="type_repor">Repor tipo de vista (100%)</button>
+			</div>
+			<div id="filtros">&nbsp;</div>
+		</form>
+		
+	</div>
+	
+	<p>&nbsp;</p>
+	<div id="main">
+		<table id="myTable">
+			<tr id="tr1">
+				<td id="t1" ><div id="dates"></div></td>
+				<td bgcolor="#000000" id="t2" ></td>
+				<td id="t3" ><div id="bars"></div></td>
+			</tr>
+		</table>
+	</div>
+	<div id="aba"></div>
+
+	
+</div>
+</body>
+</html>

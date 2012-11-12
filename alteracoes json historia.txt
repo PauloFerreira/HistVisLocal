@@ -1,0 +1,7 @@
+Trocas
+
+a) '{ "id' por '{\n "id'
+b) '"},' por '"\n},'
+c) '\r\n", ' por '",\r\n '
+d) '\r\n"\n}' por '"\r\n}'
+e)
