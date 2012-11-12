@@ -117,7 +117,7 @@ $(function() {
 				
 					for(var c = 0; c<adapta.length; c++) { //Este ciclo percorre um array em que o objectivo é por cada dominio ter a contagem de ocorrencias de paginas
 						if(adapta[c][0]==items[b][5].split('/', 3)[2]) { //Se o dominio da posição actual for igual ao dominio do site actual
-							console.log(items[b][5].split('/', 3)[2]);
+							//console.log(items[b][5].split('/', 3)[2]);
 							adapta[c][1] = adapta[c][1] + 1; //Adiciona +1 à contagem
 							myBoolean = true;
 							break;
