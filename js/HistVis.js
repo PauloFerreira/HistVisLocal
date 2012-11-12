@@ -23,7 +23,7 @@ $(function() {
 	
 	var items = [], items_dates = [], dates_nodupl = [], count_dia_array = [], domain, thumbs2 = "", box2 = [], periodo;
 	var flag_divs = new Boolean(), flag_modal = new Boolean(), flag_color = new Boolean(), flag_outside = new Boolean(), flag_color_table = new Boolean();
-	var flag_filtro = new Boolean(), filterWord = new Boolean(), domain_period = "", color_array = [], rgb = "", color_table = [], website;
+	var flag_filtro = new Boolean(), filterWord = new Boolean(), domain_period = "", color_array = [], rgb = "", color_table = [], website = "", website2 = "";
 	filterWord = false; flag_filtro = false; flag_outside = false; flag_color_table = false; flag_color = false; flag_modal = false; flag_divs = false;
 	var adapta = [], control = [], divide = 0, myBoolean = new Boolean(), pixel_bool = new Boolean(), barras_array = [];
 	adapta.push(["teste", 0]);
@@ -117,6 +117,7 @@ $(function() {
 				
 					for(var c = 0; c<adapta.length; c++) { //Este ciclo percorre um array em que o objectivo é por cada dominio ter a contagem de ocorrencias de paginas
 						if(adapta[c][0]==items[b][5].split('/', 3)[2]) { //Se o dominio da posição actual for igual ao dominio do site actual
+							console.log(items[b][5].split('/', 3)[2]);
 							adapta[c][1] = adapta[c][1] + 1; //Adiciona +1 à contagem
 							myBoolean = true;
 							break;
@@ -136,14 +137,15 @@ $(function() {
 			var rgb_count = 0, soma_pixel=0, count_dia = 0, item_link = "";
 			
 			for(var d = 0; d<control.length; d++) { //Este ciclo percorre o array control, que tem armazenadas as posições de todos os sites (items) onde a data nao duplicada foi igual à data do site
+				//console.log(items[control[d]][5].split('/'));
 				item_link = items[control[d]][5].split('/', 3)[2];
 				for(var e = 0; e<adapta.length; e++) { //Percorre o ciclo que contém por cada dominio as ocorrencias de sites de apenas um dia
 					if(adapta[e][0]==item_link) { //Se o dominio actual do adapta for igual à posição do control actual do array items
 						divide = (100*adapta[e][1])/control.length; 
 					
 						box.push(item_link); //Insere no array box o link
-						box2.push([dates_nodupl[a],item_link, items[control[d]][5], '<img src="http://open.thumbshots.org/image.aspx?url=' + items[control[d]][5] + '" border="1" width="60" height="45" />', 
-							items[control[d]][1], items[control[d]][3]]);
+						box2.push([items[control[d]][3],item_link, items[control[d]][5], '<img src="http://open.thumbshots.org/image.aspx?url=' + items[control[d]][5] + '" border="1" width="60" height="45" />', 
+							items[control[d]][1]]);
 						break;
 					}
 				}
@@ -153,9 +155,12 @@ $(function() {
 						count++;
 					}
 				}
+				
+				//console.log(item_link);
 			
 				if(count<2 && divide > 2.5) {
-					array_order.push([item_link, divide]);		
+					array_order.push([item_link, divide]);
+					//console.log(item_link);
 				} else if(count<2 && divide <= 2.5) {
 					count_little++;
 					links_little.push(item_link);
@@ -167,19 +172,40 @@ $(function() {
 			array_order.sort(function(a,b) {return  b[1] - a[1];});
 
 			$("#bars").append('<div id="linha" ></div>');
+			
+			/*
+			//console.log(array_order);
+			for(var zz = 0; zz < box2.length; zz++) {
+				//console.log("Data1: " + box2[zz][0] + "; Data2: " + box2[zz][5]);
+				//console.log("\n");
+				
+				console.log("Link: " + box2[zz][1] + "; Full link: " + box2[zz][2]);
+			}*/
+			
+			//console.log(array_order.length);
 		
 			for(var g=0; g<array_order.length; g++) {
 			
+				
 				if(array_order[g][0].split('.', 3).length==3) {
-					website = array_order[g][0].split('.', 3)[1];
+					website2 = array_order[g][0].split('.', 3)[1];
 				} else if(array_order[g][0].split('.', 3).length==2) {
-					website = array_order[g][0].split('.', 3)[0];
+					website2 = array_order[g][0].split('.', 3)[0];
 				} else {
-					website = array_order[g][0].split('.', 3)[0];
+					website2 = array_order[g][0].split('.', 3)[0];
 				}
+				//console.log(website2);
+				
+				//oi
+				
+				//VER SE FAZ SENTIDO ATRIBUIR UMA COR DIFERENTE PARA CADA SUB-DOMAIN (ACCOUNTS.GOOGLE.COM, GMAIL.GOOGLE.COM) OU SE A COR FICA A MESMA SE TIVER O MESMO DOMAIN PRINCIPAL
+				
+				website = array_order[g][0];
+				
+				//console.log("Dominio usado: " + website + "; O que era suposto: " + array_order[g][0].split('.'));
 
 				for(var h = 0; h<color_table.length; h++) {
-					if(website==color_table[h][0]) {
+					if(website2==color_table[h][0]) {
 						flag_color_table = true;
 						colr = color_table[h][1];
 						break;
@@ -187,17 +213,17 @@ $(function() {
 				}
 				if(!flag_color_table) {
 					for(var i = 0; i<color_array.length; i++) {
-						if(website==color_array[i][0]) {
+						if(website2==color_array[i][0]) {
 							var colr = color_array[i][1];
 							flag_color = true;
 							break;
-						} else if(website!=color_array[i][0]) {
+						} else if(website2!=color_array[i][0]) {
 							flag_color = false;
 						}
 					}
 					if(flag_color==false) {
 						rgb = "rgb(" + randomColor(255) + "," + randomColor(255) + "," + randomColor(255) + ")";
-						color_array.push([website, rgb]);
+						color_array.push([website2, rgb]);
 						var colr = rgb;
 					}
 				}
@@ -296,8 +322,8 @@ $(function() {
 					calc_linha = (count_dia_array[count_linha]*100)/max_linha;
 					$(this).animate({"width": calc_linha + "%"}, 800, function() {
 						$(this).children().each(function() {
-							if($(this).width()<25) {
-								$(this).children().css("display", "none");
+							if($(this).width()<23) {
+								$(this).children().hide( "slide", 600 );
 							}
 						});
 					});
@@ -318,11 +344,11 @@ $(function() {
 					$(this).animate({"width": calc_linha + "%"}, 800, function() {
 						
 						$(this).children().each(function() {
-							if($(this).width()<25 || $(this).parent().width()==0) {
-								$(this).children().css("display", "none");
+							if($(this).width()<23 || $(this).parent().width()==0) {
+								$(this).children().hide( "slide", 600 );
 							} else {
 								if($(this).children().css("display")=="none") {
-									$(this).children().css("display", "inline");
+									$(this).children().show("slide", 600);
 								}
 							}
 						});
@@ -339,14 +365,15 @@ $(function() {
 		
 		$("button#type_repor.ui-button").click(function() {
 			if(!flag_outside) {
-				$("div#linha").animate({"width": "100%"}, "slow");
+				$("div#linha").animate({"width": "100%"}, 800, function() {
+					$(this).children().each(function() {
+						if($(this).children().css("display")=="none") {
+							$(this).children().show("slide", 600);
+						}
+					});
+				});
 				flag_tr_linear=false;
 				flag_tr_log=false;
-				$("div#linha").each(function() {
-					if($(this).children().children().css("display")=="none") {
-						$(this).children().children().css("display", "inline");
-					}
-				});
 			}
 		});
 		
@@ -423,6 +450,7 @@ $(function() {
 				var left = $(this).position().left;
 				var scrollTop = $(window).scrollTop();
 
+				//domain = $(this)[0].className.split(' ')[1];
 				domain = $(this)[0].className.split(' ')[1];
 				periodo = $(this)[0].className.split(' ')[2];
 				
@@ -459,7 +487,7 @@ $(function() {
 					margin: '0 auto',
 					opacity: 1,
 					position: 'absolute',
-					top: topo + 50 + 120 + 40,
+					top: topo + 50,
 					left: left + 10,
 					border: "2px solid black",
 					display: 'none',
@@ -501,11 +529,12 @@ $(function() {
 		function thumbnails(data, site) {
 			var thumbs3 = "";
 			for(var k=0; k<box2.length; k++) {
-				if(box2[k][0]==data) {
-					if(box2[k][1].split('.', 2)[1]==site) {
+				if(box2[k][0].split(" ", 1)==data) {
+					//if(box2[k][1].split('.', 2)[1]==site) {
+					if(box2[k][1]==site) {
 						thumbs3 = thumbs3 + "<div class='item' style='display:inline-block;border:1px solid black;'><a href='" + box2[k][2] + "' target='_blank'>" + box2[k][3] + 
 									"</a><div style='display:inline-block;'>&nbsp;Título: " + box2[k][4] + 
-									" <br/>&nbsp;Data de visita: " + box2[k][5] + " <br/>&nbsp;Link: <a href='" + box2[k][2] + 
+									" <br/>&nbsp;Data de visita: " + box2[k][0] + " <br/>&nbsp;Link: <a href='" + box2[k][2] + 
 									"' target='_blank'>" + box2[k][1] + " </a></div></div><p></p>";
 					}
 				}
@@ -534,7 +563,7 @@ $(function() {
 								$("a.barra:not([class*='" + texto + "']),a.cluster").animate({opacity: 0.25}, 500);
 								flag_filtro = true;
 							} else {
-								$("p#filtros").append("<span id='warn'>No matches found!</span>");
+								$("div#filtros").append("<span id='warn'>No matches found!</span>");
 								$("span#warn")
 								.fadeOut(800, function() {
 									$(this).remove();
@@ -545,14 +574,14 @@ $(function() {
 						}
 						
 						if(flag_filtro) {
-							var $div_filtro = $("<div><span id='site'>" + texto + "</span> " + "</div>")
+							var $div_filtro = $("<div><span id='site'>" + texto + "</span> </div>")
 								.attr('id', 'div_filtro')
 								.css({
 									'display': "inline-block",
 									'padding': "5px"
 								});
 							
-							$("p#filtros").append($div_filtro);
+							$("div#filtros").append($div_filtro);
 								
 							$("div#div_filtro").last().append(
 							
@@ -567,7 +596,7 @@ $(function() {
 								.click(function() {
 									var nameFilter = $(this).parent().children("span#site").text();
 									var $actualFilter = $(this);
-									if($("p#filtros").children().length==1) {
+									if($("div#filtros").children().length==1) {
 										$("a.barra[opacity=0.25],a.cluster").animate({opacity: 1}, 500, function() {
 											flag_filtro = false;
 										});
@@ -592,6 +621,7 @@ $(function() {
 					e.preventDefault();
 					$("button#search_button.ui-button").trigger('click');
 					$("input#search_text").val("");
+					$("input#search_text").autocomplete( "close" );
 				}
 			}
 		});
@@ -601,6 +631,8 @@ $(function() {
 				$("a.barra[opacity=0.25], a.cluster").animate({opacity: 1}, 500, function() {
 					flag_filtro = false;
 				});
+				$("input#search_text").val("");
+				$("input#search_text").focus();
 				$("div#div_filtro").remove();
 			}
 		});
